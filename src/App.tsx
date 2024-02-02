@@ -1,12 +1,16 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from '@/routes';
+import { ErrorBoundary } from 'react-error-boundary';
+import { FallbackError } from '@/misc/FallbackError';
 
 function App() {
   return (
     <>
-      <Router>
-        <AppRoutes />
-      </Router>
+      <ErrorBoundary fallback={<FallbackError />}>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </ErrorBoundary>
     </>
   );
 }
