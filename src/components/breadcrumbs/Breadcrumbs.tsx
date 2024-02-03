@@ -12,7 +12,7 @@ const Breadcrumbs: React.FC<Props> = ({ mapping }) => {
   const breadcrumbs = useBreadcrumbs(mapping);
 
   return (
-    <Box p={3}>
+    <Box py={3}>
       <MuiBreadcrumbs aria-label="breadcrumb">
         <Link underline="hover" color="inherit" href="/">
           Home
