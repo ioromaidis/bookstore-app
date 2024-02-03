@@ -7,7 +7,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/books" element={<Books />} />
+      <Route path="/books/*" element={<Books />} />
       <Route path="/" element={<Landing />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
