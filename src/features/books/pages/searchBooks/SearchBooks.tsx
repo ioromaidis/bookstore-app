@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Grid, Stack, TextField } from '@mui/material';
-import BookItem from '../../components/BookItem';
+import BookItem from '../../components/bookItem';
 import { GetBookOptions, useGetBooks } from '../../api';
 import Filters from './components/filters';
 

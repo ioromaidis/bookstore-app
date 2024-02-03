@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Landing from '@/pages/landing';
 import Books from '@/features/books';
-import NotFoundPage from '@/pages/NotFoundPage';
+import NotFoundPage from '@/pages/notFoundPage';
 
 const AppRoutes: React.FC = () => {
   return (

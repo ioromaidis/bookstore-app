@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-import BookDetail from '../pages/BookDetail';
-import CreateBook from '../pages/CreateBook';
-import SearchBooks from '../pages/SearchBooks';
+import BookDetail from '../pages/bookDetail';
+import CreateBook from '../pages/createBook';
+import SearchBooks from '../pages/searchBooks';
 
 const BooksRoutes = () => (
   <Routes>

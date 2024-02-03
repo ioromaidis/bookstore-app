@@ -14,7 +14,7 @@ export const CategoryFilters: React.FC<Props> = ({ filters, onChange }) => {
     <Box p={3}>
       <Typography variant="subtitle2">Categories</Typography>
       {Object.keys(filters).map((category) => (
-        <Box>
+        <Box key={category}>
           <FormControlLabel
             control={
               <Checkbox
