@@ -1,12 +1,25 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
-const Landing = () => {
+const Landing: React.FC = () => {
   return (
-    <>
-      <h1>Welcome to our bookstore</h1>
+    <Box
+      height="100%"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      sx={(theme) => ({ backgroundColor: theme.palette.secondary.light })}
+    >
+      <Stack alignItems="center" spacing={4}>
+        <Typography variant="h1" textAlign="center" color="primary.dark">
+          Bookstore
+        </Typography>
 
-      <Link to="/search">Enter</Link>
-    </>
+        <Button variant="contained" size="large" color="primary" href="/books">
+          Enter
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
