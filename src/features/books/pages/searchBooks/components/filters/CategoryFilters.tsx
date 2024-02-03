@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { Category } from '../../../..';
 
-export type CategoryFilters = Record<Category, boolean>;
+export type CategoryFilter = Record<Category, boolean>;
 
 interface Props {
-  filters: CategoryFilters;
+  filters: CategoryFilter;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

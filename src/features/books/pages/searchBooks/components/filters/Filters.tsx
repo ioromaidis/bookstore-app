@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Divider, IconButton, Popover, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
-import { GetBookOptions } from '../../../..';
-import { useCategoryFilters } from './useCategoryFilters';
+import { GetBookOptions } from '../../../../api';
 import { CategoryFilters } from './CategoryFilters';
+import { RatingFilters } from './RatingFilters';
+import { useCategoryFilters } from './useCategoryFilters';
+import { useRatingFilters } from './useRatingFilters';
 
 interface Props {
   onFiltersChange: (newFilters: Partial<GetBookOptions>) => void;
@@ -16,16 +18,24 @@ const Filters: React.FC<Props> = ({ onFiltersChange }) => {
     filters: categoryFilters,
     handleFilterChange: handleCategoryFilterChange,
   } = useCategoryFilters();
+  const {
+    filters: ratingFilters,
+    handleFilterChange: handleRatingFilterChange,
+  } = useRatingFilters();
 
   const handleFiltersToggle = (open: boolean) => () => {
     setFiltersOpen(open);
   };
 
   const handleFilterChange =
-    (type: 'category') => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (type: 'category' | 'rating') =>
+    (e: React.ChangeEvent<HTMLInputElement>, ...args: any[]) => {
       switch (type) {
         case 'category':
           handleCategoryFilterChange(e.target.value);
+          break;
+        case 'rating':
+          handleRatingFilterChange(args[0]);
           break;
       }
     };
@@ -35,8 +45,9 @@ const Filters: React.FC<Props> = ({ onFiltersChange }) => {
       category: Object.entries(categoryFilters)
         .filter(([_, isChecked]) => isChecked)
         .map(([key]) => key),
+      rating: ratingFilters,
     });
-  }, [categoryFilters]);
+  }, [categoryFilters, ratingFilters]);
 
   return (
     <>
@@ -58,6 +69,15 @@ const Filters: React.FC<Props> = ({ onFiltersChange }) => {
         <CategoryFilters
           filters={categoryFilters}
           onChange={handleFilterChange('category')}
+        />
+        <Divider />
+        <RatingFilters
+          filters={ratingFilters}
+          onChange={
+            handleFilterChange('rating') as unknown as React.ComponentProps<
+              typeof RatingFilters
+            >['onChange']
+          }
         />
       </Popover>
     </>

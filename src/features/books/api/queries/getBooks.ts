@@ -4,6 +4,7 @@ import { Book, Category } from '../..';
 export interface GetBookOptions {
   query?: string;
   category?: Category[];
+  rating?: [number, number];
 }
 
 const filterBooks =
@@ -21,6 +22,11 @@ const applyFilters = (book: Book, rest: Partial<GetBookOptions>) => {
       return (value as GetBookOptions['category'])?.some((val) =>
         book.categories.includes(val)
       );
+    }
+
+    if (key === 'rating') {
+      const [min, max] = value as GetBookOptions['rating'];
+      return book.rating >= min && book.rating <= max;
     }
 
     return false;

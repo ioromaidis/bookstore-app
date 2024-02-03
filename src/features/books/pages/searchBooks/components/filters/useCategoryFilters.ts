@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useGetCategories } from '../../../../api/hooks/useGetCategories';
+import { CategoryFilter } from './CategoryFilters';
 
 export const useCategoryFilters = () => {
   const categories = useGetCategories();
-  const [filters, setFilters] = useState<Record<string, boolean>>(
+  const [filters, setFilters] = useState<CategoryFilter>(
     categories.reduce((acc, curr) => ({ ...acc, [curr]: false }), {})
   );
 

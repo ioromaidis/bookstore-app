@@ -33,7 +33,7 @@ const SearchBooks: React.FC = () => {
         />
       </Stack>
 
-      <Box>
+      <Box pb={4}>
         <Grid container spacing={3} justifyContent="center">
           {books.map((book) => (
             <Grid item xs={8} sm={4} md={3} key={book.isbn}>
