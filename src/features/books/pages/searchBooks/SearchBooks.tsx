@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Box, Grid, Stack, TextField } from '@mui/material';
-import BookItem from '../../components/bookItem';
+import {
+  Box,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { GetBookOptions, useGetBooks } from '../../api';
 import Filters from './components/filters';
+import EmptyResults from '@/components/emptyResults';
+import BookGrid from '../../components/bookGrid';
 
 const SearchBooks: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -24,23 +32,32 @@ const SearchBooks: React.FC = () => {
 
   return (
     <Stack spacing={3}>
+      <Box>
+        <Typography variant="h3">Search to find your new book</Typography>
+        <Typography>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua
+        </Typography>
+      </Box>
       <Stack direction="row" alignItems="center" spacing={3}>
-        <Filters onFiltersChange={handleFiltersChange} />
         <TextField
+          fullWidth
           placeholder="Search"
           value={query}
           onChange={handleSearchChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
+        <Filters onFiltersChange={handleFiltersChange} />
       </Stack>
 
       <Box pb={4}>
-        <Grid container spacing={3} justifyContent="center">
-          {books.map((book) => (
-            <Grid item xs={8} sm={4} md={3} key={book.isbn}>
-              <BookItem book={book} />
-            </Grid>
-          ))}
-        </Grid>
+        {books.length ? <BookGrid books={books} /> : <EmptyResults />}
       </Box>
     </Stack>
   );

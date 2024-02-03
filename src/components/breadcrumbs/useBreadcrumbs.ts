@@ -7,7 +7,7 @@ export const getSegmentUrl = (segments: string[], index: number) =>
 
 const useBreadcrumbs = (mapping?: BreadcrumbMapping) => {
   const location = useLocation();
-  const segments = location.pathname.split('/').slice(1);
+  const segments = location.pathname.split('/').filter((segment) => !!segment);
 
   return segments.map((segment, index) => ({
     label: mapping?.[segment] || capitalize(segment),
