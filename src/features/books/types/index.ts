@@ -10,6 +10,9 @@ export interface Book {
   website: string;
   rating: number;
   thumb: string;
+  categories: Category[];
 }
+
+export type Category = string;
 
 export type BookCollection = Book[];

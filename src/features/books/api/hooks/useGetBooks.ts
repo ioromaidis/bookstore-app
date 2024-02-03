@@ -1,3 +1,3 @@
-import { getBooks } from '../queries/getBooks';
+import { GetBookOptions, getBooks } from '../queries/getBooks';
 
-export const useGetBooks = () => getBooks();
+export const useGetBooks = (options: GetBookOptions) => getBooks(options);

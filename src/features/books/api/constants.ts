@@ -1,5 +1,12 @@
 import { BookCollection } from '@/features/books/types';
 
+export const CATEGORIES = {
+  JS: 'JavaScript',
+  VERSION_CONTROL: 'Version Control',
+  PRODUCTIVITY: 'Productivity',
+  SOFTWARE_ENGINEERING: 'Software Engineering',
+};
+
 const INITIAL_BOOKS: BookCollection = [
   {
     isbn: '9781593279509',
@@ -14,6 +21,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'http://eloquentjavascript.net/',
     rating: 4,
     thumb: 'https://picsum.photos/500?id=1',
+    categories: [CATEGORIES.JS, CATEGORIES.SOFTWARE_ENGINEERING],
   },
   {
     isbn: '9781491943533',
@@ -28,6 +36,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'https://github.com/mjavascript/practical-modern-javascript',
     rating: 3,
     thumb: 'https://picsum.photos/500?id=2',
+    categories: [CATEGORIES.JS],
   },
   {
     isbn: '9781593277574',
@@ -42,6 +51,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'https://leanpub.com/understandinges6/read',
     rating: 5,
     thumb: 'https://picsum.photos/500?id=3',
+    categories: [CATEGORIES.JS],
   },
   {
     isbn: '9781449365035',
@@ -56,6 +66,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'http://speakingjs.com/',
     rating: 4.5,
     thumb: 'https://picsum.photos/500?id=4',
+    categories: [CATEGORIES.JS],
   },
   {
     isbn: '9781449331818',
@@ -71,6 +82,7 @@ const INITIAL_BOOKS: BookCollection = [
       'http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/',
     rating: 5,
     thumb: 'https://picsum.photos/500?id=5',
+    categories: [CATEGORIES.JS, CATEGORIES.SOFTWARE_ENGINEERING],
   },
   {
     isbn: '9798602477429',
@@ -86,6 +98,7 @@ const INITIAL_BOOKS: BookCollection = [
       'https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/get-started',
     rating: 2,
     thumb: 'https://picsum.photos/500?id=6',
+    categories: [CATEGORIES.JS],
   },
   {
     isbn: '9781484200766',
@@ -100,6 +113,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'https://git-scm.com/book/en/v2',
     rating: 3,
     thumb: 'https://picsum.photos/500?id=7',
+    categories: [CATEGORIES.VERSION_CONTROL],
   },
   {
     isbn: '9781484242216',
@@ -114,6 +128,7 @@ const INITIAL_BOOKS: BookCollection = [
     website: 'https://doi.org/10.1007/978-1-4842-4221-6',
     rating: 4,
     thumb: 'https://picsum.photos/500?id=8',
+    categories: [CATEGORIES.PRODUCTIVITY],
   },
 ];
 
