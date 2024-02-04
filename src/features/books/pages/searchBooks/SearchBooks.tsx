@@ -20,8 +20,7 @@ const SearchBooks: React.FC = () => {
     ...filters,
   });
 
-  // In a real scenario that would involve http request we should
-  // throttle this.
+  // TODO: Throttle this
   const handleSearchChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setQuery(e.target.value);

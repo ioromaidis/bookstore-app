@@ -6,7 +6,7 @@ export const theme = createTheme({
     htmlFontSize: 16,
     h1: {
       fontFamily: 'Montserrat',
-      fontSize: 38,
+      fontSize: 52,
       lineHeight: 1.8,
       fontWeight: 700,
     },

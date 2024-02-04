@@ -12,7 +12,7 @@ const Landing: React.FC = () => {
     >
       <Stack alignItems="center" spacing={4}>
         <Typography variant="h1" textAlign="center" color="primary.dark">
-          Bookstore
+          Bookstore. A place with books.
         </Typography>
 
         <Button variant="contained" size="large" color="primary" href="/books">
