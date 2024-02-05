@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getBooks } from '../queries/getBooks';
+import { getBooks } from '../queries';
 import { BookCollection, Category } from '@/features/books';
 import { filterBooks } from './utils';
 

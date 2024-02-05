@@ -17,26 +17,34 @@ import Breadcrumbs from '../../components/breadcrumbs';
 
 const CreateBook = () => {
   const { openSnackbar } = useSnackbarContext();
-  const { mutate, error } = useCreateBook();
+  const { mutate, error, isSuccess } = useCreateBook();
+
   const handleSubmit = async (
-    data: Record<string, any>,
+    data: Record<string, string>,
     { reset }: UseFormReturn
   ) => {
     mutate({
       title: data.title,
       description: data.description,
       rating: data.rating,
-      categories: data.categories.split(','),
+      categories: data.categories.split(',').map((cat) => cat.trim()),
       publisher: data.publisher,
       pages: data.pages,
       thumb: data.file,
       isbn: data.isbn10,
       author: data.author,
-    } as Book);
+    } as unknown as Book);
 
     reset();
-    openSnackbar('Book was added successfully!', { severity: 'success' });
   };
+
+  useEffect(() => {
+    if (!isSuccess) {
+      return;
+    }
+
+    openSnackbar('Book was added successfully!', { severity: 'success' });
+  }, [isSuccess]);
 
   useEffect(() => {
     if (!error) {

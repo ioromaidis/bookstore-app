@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-import EmptyResults from '@/components/emptyResults';
 import { useDebounce } from '@/hooks';
+import DataWrapper from '@/components/dataWrapper';
 
 import { GetBookOptions, useGetBooks } from '../../api';
 import Search from './components/search';
@@ -16,7 +16,7 @@ const SearchBooks: React.FC = () => {
   const debouncedQuery = useDebounce(query, 200);
   const [filters, setFilters] = useState<Omit<GetBookOptions, 'query'>>({});
   const debouncedFilters = useDebounce(filters, 200);
-  const { data } = useGetBooks({
+  const { data = [], isLoading } = useGetBooks({
     query: debouncedQuery,
     ...debouncedFilters,
   });
@@ -48,7 +48,9 @@ const SearchBooks: React.FC = () => {
         <Chips filters={filters} />
 
         <Box pb={4}>
-          {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
+          <DataWrapper isLoading={isLoading} dataCheck={!!data?.length}>
+            <BookGrid books={data} />
+          </DataWrapper>
         </Box>
 
         <CreateBookButton />

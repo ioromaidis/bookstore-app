@@ -10,6 +10,7 @@ export interface Book {
   description: string;
   website: string;
   rating: number;
+  year?: number;
   thumb: string;
   categories: Category[];
 }

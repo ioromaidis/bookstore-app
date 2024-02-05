@@ -3,18 +3,20 @@ import { useGetBooks } from '@/features/books';
 import Breadcrumbs from '@/features/books/components/breadcrumbs';
 import { Box, Stack } from '@mui/material';
 import BookGrid from '@/features/books/components/bookGrid';
-import EmptyResults from '@/components/emptyResults';
+import DataWrapper from '@/components/dataWrapper';
 
 const BookCategory = () => {
   const { cat = '' } = useParams();
-  const { data } = useGetBooks({ category: [cat] });
+  const { data = [], isLoading } = useGetBooks({ category: [cat] });
 
   return (
     <>
       <Stack spacing={3} pb={5}>
         <Breadcrumbs />
         <Box pb={4}>
-          {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
+          <DataWrapper isLoading={isLoading} dataCheck={!!data?.length}>
+            <BookGrid books={data} />
+          </DataWrapper>
         </Box>
       </Stack>
     </>

@@ -8,11 +8,22 @@ let CATEGORIES = require("./data/categories");
 const app = express();
 const port = 3000;
 
+app.use(bodyParser({ limit: "500mb" }));
 app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/books", (req, res) => {
   res.send(BOOKS);
+});
+
+app.get("/books/:id", (req, res) => {
+  const result = BOOKS.find(({ id }) => id === req.params.id);
+
+  if (result) {
+    res.send(result);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.get("/categories", (req, res) => {
@@ -21,7 +32,7 @@ app.get("/categories", (req, res) => {
 
 app.post("/books", (req, res) => {
   BOOKS.push({ id: uuidv4(), ...req.body });
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {

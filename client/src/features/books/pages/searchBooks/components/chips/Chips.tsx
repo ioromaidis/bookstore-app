@@ -9,7 +9,7 @@ interface Props {
 
 const Chips: React.FC<Props> = ({ filters }) => (
   <Stack direction="row" spacing={1} overflow="auto">
-    {filters.category?.map((item: string) => <Chip id={item} label={item} />)}
+    {filters.category?.map((item: string) => <Chip key={item} label={item} />)}
     {filters.rating && (
       <Chip label={`Rating: ${filters.rating[0]} - ${filters.rating[1]}`} />
     )}

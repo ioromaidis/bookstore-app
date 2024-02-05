@@ -8,7 +8,7 @@ const Landing: React.FC = () => {
   return (
     <FullPageWrapper>
       <Stack alignItems="center" spacing={4}>
-        <BigTitle>Bookstore. A place with books.</BigTitle>
+        <BigTitle>Bookstore app.</BigTitle>
 
         <Button variant="contained" size="large" color="primary" href="/books">
           Enter
