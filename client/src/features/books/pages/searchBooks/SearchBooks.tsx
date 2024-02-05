@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { GetBookOptions, useGetBooks } from '../../api';
-import Filters from './components/filters';
+import { Box, Stack, Typography } from '@mui/material';
 import EmptyResults from '@/components/emptyResults';
+import { useDebounce } from '@/hooks';
+
+import { GetBookOptions, useGetBooks } from '../../api';
+import Search from './components/search';
+import Filters from './components/filters';
+import Chips from './components/chips';
 import BookGrid from '../../components/bookGrid';
+import CreateBookButton from './components/createBookButton';
 
 const SearchBooks: React.FC = () => {
   const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 200);
   const [filters, setFilters] = useState<Omit<GetBookOptions, 'query'>>({});
+  const debouncedFilters = useDebounce(filters, 200);
   const { data } = useGetBooks({
-    query,
-    ...filters,
+    query: debouncedQuery,
+    ...debouncedFilters,
   });
 
-  // TODO: Throttle this
   const handleSearchChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setQuery(e.target.value);
@@ -38,26 +37,18 @@ const SearchBooks: React.FC = () => {
           eiusmod tempor incididunt ut labore et dolore magna aliqua
         </Typography>
       </Box>
+
       <Stack direction="row" alignItems="center" spacing={3}>
-        <TextField
-          fullWidth
-          placeholder="Search"
-          value={query}
-          onChange={handleSearchChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <Search value={query} onChange={handleSearchChange} />
         <Filters onFiltersChange={handleFiltersChange} />
       </Stack>
+      <Chips filters={filters} />
 
       <Box pb={4}>
         {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
       </Box>
+
+      <CreateBookButton />
     </Stack>
   );
 };

@@ -1,25 +1,20 @@
 import React from 'react';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
+
+import FullPageWrapper from '../components/fullPageWrapper';
+import BigTitle from '../components/bigTitle';
 
 const Landing: React.FC = () => {
   return (
-    <Box
-      height="100%"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      sx={(theme) => ({ backgroundColor: theme.palette.secondary.light })}
-    >
+    <FullPageWrapper>
       <Stack alignItems="center" spacing={4}>
-        <Typography variant="h1" textAlign="center" color="primary.dark">
-          Bookstore. A place with books.
-        </Typography>
+        <BigTitle>Bookstore. A place with books.</BigTitle>
 
         <Button variant="contained" size="large" color="primary" href="/books">
           Enter
         </Button>
       </Stack>
-    </Box>
+    </FullPageWrapper>
   );
 };
 
