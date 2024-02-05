@@ -14,7 +14,7 @@ const BookGrid: React.FC<Props> = ({ books }) => (
     justifyContent={{ xs: 'center', md: 'flex-start' }}
   >
     {books.map((book) => (
-      <Grid item xs={8} sm={4} md={3} key={book.isbn}>
+      <Grid item xs={8} sm={4} md={3} key={book.id}>
         <BookItem book={book} />
       </Grid>
     ))}

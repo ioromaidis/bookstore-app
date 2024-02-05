@@ -17,6 +17,8 @@ export const ISBN13_HELPER_MESSAGE = 'Please enter 13 digits.';
 export const DESCRIPTION_UPPERCASE_ERROR_MESSAGE =
   'Field should start with capital letter.';
 
+export const INVALID_FILE_EXTENSION_ERROR_MESSAGE = 'Invalid file extension.';
+
 export const CATEGORIES_HELPER_MESSAGE =
   'Enter up to 4 categories separated with commas.';
 

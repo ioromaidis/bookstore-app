@@ -7,15 +7,39 @@ import {
   ISBN10_HELPER_MESSAGE,
   ISBN13_HELPER_MESSAGE,
 } from '@/features/books/pages/createBook/constants';
+import BookPhoto from './components/bookPhoto';
+import { Book, useCreateBook } from '@/features/books';
+import { UseFormReturn } from 'react-hook-form';
 
 const CreateBook = () => {
-  const handleSubmit = (data) => console.log(data);
+  const { mutate } = useCreateBook();
+  const handleSubmit = async (
+    data: Record<string, any>,
+    { reset }: UseFormReturn
+  ) => {
+    try {
+      await mutate({
+        title: data.title,
+        description: data.description,
+        rating: data.rating,
+        categories: data.categories.split(','),
+        publisher: data.publisher,
+        pages: data.pages,
+        thumb: data.file,
+        isbn: data.isbn10,
+        author: data.author,
+      } as Book);
+
+      reset();
+      alert('done!');
+    } catch (e) {}
+  };
 
   return (
     <Stack spacing={3} pb={5}>
       <Typography variant="h3">Add new Book</Typography>
       <Form schema={getSchema()} onSubmit={handleSubmit}>
-        {({ register }) => (
+        {() => (
           <Stack spacing={7}>
             <Box>
               <Grid container spacing={3}>
@@ -45,7 +69,7 @@ const CreateBook = () => {
 
                 <Grid item xs={12} sm={6}>
                   <Stack spacing={3}>
-                    <input type="file" {...register('image')} />
+                    <BookPhoto />
                     <FormField name="rating" label="Rating" />
                     <FormField
                       name="isbn10"

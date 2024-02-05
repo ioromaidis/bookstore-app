@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  FieldValues,
   FormProvider,
-  SubmitHandler,
   useForm,
   UseFormProps,
   UseFormReturn,
@@ -11,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { YupSchema } from './schema';
 
 interface Props {
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit: Function;
   children: (form: UseFormReturn) => React.ReactNode;
   options?: UseFormProps;
   schema?: YupSchema;
@@ -30,7 +28,9 @@ export const Form: React.FC<Props> = ({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>{children(form)}</form>
+      <form onSubmit={form.handleSubmit((data) => onSubmit(data, form))}>
+        {children(form)}
+      </form>
     </FormProvider>
   );
 };

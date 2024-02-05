@@ -25,7 +25,7 @@ export const getSchema = () =>
         .test(
           'description',
           DESCRIPTION_UPPERCASE_ERROR_MESSAGE,
-          (value) => value[0] === value[0].toUpperCase()
+          (value) => value[0] === value[0]?.toUpperCase()
         ),
       categories: yup
         .string()
@@ -58,5 +58,6 @@ export const getSchema = () =>
         .integer()
         .min(0)
         .max(5),
+      file: yup.string().required(REQUIRED_ERROR_MESSAGE),
     })
   );

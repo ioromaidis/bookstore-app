@@ -15,7 +15,7 @@ import BookGrid from '../../components/bookGrid';
 const SearchBooks: React.FC = () => {
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<Omit<GetBookOptions, 'query'>>({});
-  const books = useGetBooks({
+  const { data } = useGetBooks({
     query,
     ...filters,
   });
@@ -56,7 +56,7 @@ const SearchBooks: React.FC = () => {
       </Stack>
 
       <Box pb={4}>
-        {books.length ? <BookGrid books={books} /> : <EmptyResults />}
+        {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
       </Box>
     </Stack>
   );
