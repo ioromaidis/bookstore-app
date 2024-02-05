@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 let BOOKS = require("./data/books");
+let CATEGORIES = require("./data/categories");
 
 const app = express();
 const port = 3000;
@@ -12,6 +13,10 @@ app.use(cors());
 
 app.get("/books", (req, res) => {
   res.send(BOOKS);
+});
+
+app.get("/categories", (req, res) => {
+  res.send(Object.values(CATEGORIES));
 });
 
 app.post("/books", (req, res) => {

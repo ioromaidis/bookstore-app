@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { Form, FormField } from '@/components/form';
 import { getSchema } from './schema';
@@ -11,7 +12,8 @@ import BookPhoto from './components/bookPhoto';
 import { Book, useCreateBook } from '@/features/books';
 import { UseFormReturn } from 'react-hook-form';
 import { useSnackbarContext } from '@/components/snackbar';
-import { useEffect } from 'react';
+
+import Breadcrumbs from '../../components/breadcrumbs';
 
 const CreateBook = () => {
   const { openSnackbar } = useSnackbarContext();
@@ -20,7 +22,7 @@ const CreateBook = () => {
     data: Record<string, any>,
     { reset }: UseFormReturn
   ) => {
-    await mutate({
+    mutate({
       title: data.title,
       description: data.description,
       rating: data.rating,
@@ -48,6 +50,7 @@ const CreateBook = () => {
 
   return (
     <Stack spacing={3} pb={5}>
+      <Breadcrumbs />
       <Typography variant="h3">Add new Book</Typography>
       <Form schema={getSchema()} onSubmit={handleSubmit}>
         {() => (

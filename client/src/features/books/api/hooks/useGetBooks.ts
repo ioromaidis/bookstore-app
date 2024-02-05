@@ -9,13 +9,11 @@ export interface GetBookOptions {
   rating?: [number, number];
 }
 
-export const useGetBooks = (options: GetBookOptions) => {
-  return useQuery(['books'], () => getBooks(), {
-    retry: 0,
+export const useGetBooks = (options: GetBookOptions) =>
+  useQuery(['books'], () => getBooks(), {
     select: (data: BookCollection) => {
       const { query = '', ...filters } = options;
 
       return data.filter(filterBooks(query)(filters));
     },
   });
-};

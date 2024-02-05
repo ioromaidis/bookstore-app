@@ -9,6 +9,7 @@ import Filters from './components/filters';
 import Chips from './components/chips';
 import BookGrid from '../../components/bookGrid';
 import CreateBookButton from './components/createBookButton';
+import Breadcrumbs from '../../components/breadcrumbs';
 
 const SearchBooks: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -29,27 +30,30 @@ const SearchBooks: React.FC = () => {
   };
 
   return (
-    <Stack spacing={3}>
-      <Box>
-        <Typography variant="h3">Search to find your new book</Typography>
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua
-        </Typography>
-      </Box>
+    <>
+      <Breadcrumbs />
+      <Stack spacing={3}>
+        <Box>
+          <Typography variant="h3">Search to find your new book</Typography>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua
+          </Typography>
+        </Box>
 
-      <Stack direction="row" alignItems="center" spacing={3}>
-        <Search value={query} onChange={handleSearchChange} />
-        <Filters onFiltersChange={handleFiltersChange} />
+        <Stack direction="row" alignItems="center" spacing={3}>
+          <Search value={query} onChange={handleSearchChange} />
+          <Filters onFiltersChange={handleFiltersChange} />
+        </Stack>
+        <Chips filters={filters} />
+
+        <Box pb={4}>
+          {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
+        </Box>
+
+        <CreateBookButton />
       </Stack>
-      <Chips filters={filters} />
-
-      <Box pb={4}>
-        {data?.length ? <BookGrid books={data} /> : <EmptyResults />}
-      </Box>
-
-      <CreateBookButton />
-    </Stack>
+    </>
   );
 };
 

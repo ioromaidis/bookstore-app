@@ -1,5 +1,12 @@
+import Breadcrumbs from '../../components/breadcrumbs';
+
 const BookDetail = () => {
-  return <h1>Book Detail</h1>;
+  return (
+    <>
+      <Breadcrumbs />
+      <h1>Book Detail</h1>
+    </>
+  );
 };
 
 export default BookDetail;

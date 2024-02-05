@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --kill-others \"pnpm run --prefix client dev\" \"pnpm run --prefix server start\"",
-    "test:client": "pnpm run --prefix client testk"
+    "test:client": "pnpm run --prefix client test"
   },
   "keywords": [],
   "author": "",

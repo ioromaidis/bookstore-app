@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { getSegmentUrl } from './useBreadcrumbs';
+import { getSegmentUrl } from './useBreadcrumbs.ts';
 
 test('getSegmentUrl: parses correctly one segment', () => {
   const segments = ['home'];

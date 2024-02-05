@@ -1,4 +1,5 @@
 import { Book, GetBookOptions } from '@/features/books';
+import { slugify } from '@/helpers/utils.ts';
 
 export const filterBooks =
   (query: string) => (filters: Omit<GetBookOptions, 'query'>) => (book: Book) =>
@@ -13,7 +14,7 @@ const applyFilters = (book: Book, rest: Partial<GetBookOptions>) => {
       }
 
       return (value as GetBookOptions['category'])?.some((val) =>
-        book.categories.includes(val)
+        book.categories.map((cat) => slugify(cat)).includes(slugify(val))
       );
     }
 

@@ -1,18 +1,23 @@
-import { useLocation } from 'react-router-dom';
-import { capitalize } from '@/helpers/utils';
-import { BreadcrumbMapping } from './Breadcrumbs';
+import { useLocation, useParams } from 'react-router-dom';
+import { capitalize, unslugify } from '@/helpers/utils.ts';
 
 export const getSegmentUrl = (segments: string[], index: number) =>
   `/${segments.slice(0, index + 1).join('/')}`;
 
-const useBreadcrumbs = (mapping?: BreadcrumbMapping) => {
+const useBreadcrumbs = () => {
   const location = useLocation();
+  const { bookId } = useParams();
   const segments = location.pathname.split('/').filter((segment) => !!segment);
+  const lastIndex = segments.length - 1;
+
+  if (bookId) {
+    segments.pop();
+  }
 
   return segments.map((segment, index) => ({
-    label: mapping?.[segment] || capitalize(segment),
+    label: capitalize(unslugify(segment)),
     url: getSegmentUrl(segments, index),
-    isCurrent: index === segments.length - 1,
+    isCurrent: index === lastIndex,
   }));
 };
 

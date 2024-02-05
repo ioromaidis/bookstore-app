@@ -1,15 +1,9 @@
 import React from 'react';
 import { Box, Breadcrumbs as MuiBreadcrumbs, Link } from '@mui/material';
-import useBreadcrumbs from '@/components/breadcrumbs/useBreadcrumbs.ts';
+import useBreadcrumbs from '@/features/books/components/breadcrumbs/useBreadcrumbs.ts';
 
-export type BreadcrumbMapping = Record<string, string>;
-
-interface Props {
-  mapping?: BreadcrumbMapping;
-}
-
-const Breadcrumbs: React.FC<Props> = ({ mapping }) => {
-  const breadcrumbs = useBreadcrumbs(mapping);
+const Breadcrumbs: React.FC = () => {
+  const breadcrumbs = useBreadcrumbs();
 
   return (
     <Box py={3}>
