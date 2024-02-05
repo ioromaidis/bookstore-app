@@ -10,30 +10,41 @@ import {
 import BookPhoto from './components/bookPhoto';
 import { Book, useCreateBook } from '@/features/books';
 import { UseFormReturn } from 'react-hook-form';
+import { useSnackbarContext } from '@/components/snackbar';
+import { useEffect } from 'react';
 
 const CreateBook = () => {
-  const { mutate } = useCreateBook();
+  const { openSnackbar } = useSnackbarContext();
+  const { mutate, error } = useCreateBook();
   const handleSubmit = async (
     data: Record<string, any>,
     { reset }: UseFormReturn
   ) => {
-    try {
-      await mutate({
-        title: data.title,
-        description: data.description,
-        rating: data.rating,
-        categories: data.categories.split(','),
-        publisher: data.publisher,
-        pages: data.pages,
-        thumb: data.file,
-        isbn: data.isbn10,
-        author: data.author,
-      } as Book);
+    await mutate({
+      title: data.title,
+      description: data.description,
+      rating: data.rating,
+      categories: data.categories.split(','),
+      publisher: data.publisher,
+      pages: data.pages,
+      thumb: data.file,
+      isbn: data.isbn10,
+      author: data.author,
+    } as Book);
 
-      reset();
-      alert('done!');
-    } catch (e) {}
+    reset();
+    openSnackbar('Book was added successfully!', { severity: 'success' });
   };
+
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    openSnackbar('Something went wrong. Please try again.', {
+      severity: 'error',
+    });
+  }, [error]);
 
   return (
     <Stack spacing={3} pb={5}>

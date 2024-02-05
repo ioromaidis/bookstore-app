@@ -4,14 +4,18 @@ import { Footer } from '@/misc/Footer';
 import { FullHeightBox } from '@/misc/FullHeightBox';
 import Breadcrumbs from '@/components/breadcrumbs';
 import Container from '@/misc/Container';
+import { FallbackError } from '@/misc/FallbackError.tsx';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const Books = () => {
   return (
     <FullHeightBox>
       <Header />
       <Container flexGrow={1}>
-        <Breadcrumbs />
-        <BooksRoutes />
+        <ErrorBoundary fallback={<FallbackError />}>
+          <Breadcrumbs />
+          <BooksRoutes />
+        </ErrorBoundary>
       </Container>
       <Footer />
     </FullHeightBox>

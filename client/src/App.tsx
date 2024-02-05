@@ -6,6 +6,7 @@ import { FallbackError } from '@/misc/FallbackError';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from '@/theme.ts';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { SnackbarProvider } from '@/components/snackbar';
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -14,11 +15,13 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ErrorBoundary fallback={<FallbackError />}>
-          <Router>
-            <AppRoutes />
-          </Router>
-        </ErrorBoundary>
+        <SnackbarProvider>
+          <ErrorBoundary fallback={<FallbackError />}>
+            <Router>
+              <AppRoutes />
+            </Router>
+          </ErrorBoundary>
+        </SnackbarProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
