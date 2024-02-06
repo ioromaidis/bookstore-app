@@ -1,86 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Divider, IconButton, Popover, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
-import { GetBookOptions } from '../../../../api';
-import { CategoryFilters } from './CategoryFilters';
-import { RatingFilters } from './RatingFilters';
-import { useCategoryFilters } from './useCategoryFilters';
-import { useRatingFilters } from './useRatingFilters';
+
+import { GetBookOptions } from '../../../../api/hooks/types';
+import { useFilters } from './hooks/useFilters';
+import { useFiltersToggle } from './hooks/useFiltersToggle';
 
 interface Props {
   onFiltersChange: (newFilters: Partial<GetBookOptions>) => void;
 }
 
 const Filters: React.FC<Props> = ({ onFiltersChange }) => {
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const anchor = useRef<HTMLButtonElement>(null);
-  const {
-    filters: categoryFilters,
-    handleFilterChange: handleCategoryFilterChange,
-  } = useCategoryFilters();
-  const {
-    filters: ratingFilters,
-    handleFilterChange: handleRatingFilterChange,
-  } = useRatingFilters();
-
-  const handleFiltersToggle = (open: boolean) => () => {
-    setFiltersOpen(open);
-  };
-
-  const handleFilterChange =
-    (type: 'category' | 'rating') =>
-    (e: React.ChangeEvent<HTMLInputElement>, ...args: any[]) => {
-      switch (type) {
-        case 'category':
-          handleCategoryFilterChange(e.target.value);
-          break;
-        case 'rating':
-          handleRatingFilterChange(args[0]);
-          break;
-      }
-    };
+  const { config, filters } = useFilters();
+  const { anchor, handleFiltersToggle, filtersOpen } = useFiltersToggle();
 
   useEffect(() => {
-    onFiltersChange({
-      category: Object.entries(categoryFilters)
-        .filter(([_, isChecked]) => isChecked)
-        .map(([key]) => key),
-      rating: ratingFilters,
-    });
-  }, [categoryFilters, ratingFilters]);
+    if (!filters) {
+      return;
+    }
+
+    onFiltersChange(filters);
+  }, [filters]);
 
   return (
-    <>
-      <IconButton ref={anchor} onClick={handleFiltersToggle(true)}>
-        <TuneIcon />
-      </IconButton>
-      <Popover
-        open={filtersOpen}
-        onClose={handleFiltersToggle(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        anchorEl={anchor.current}
-      >
-        <Box p={2}>
-          <Typography variant="subtitle2" textAlign="center">
-            Filters
-          </Typography>
-        </Box>
-        <Divider />
-        <CategoryFilters
-          filters={categoryFilters}
-          onChange={handleFilterChange('category')}
-        />
-        <Divider />
-        <RatingFilters
-          filters={ratingFilters}
-          onChange={
-            handleFilterChange('rating') as unknown as React.ComponentProps<
-              typeof RatingFilters
-            >['onChange']
-          }
-        />
-      </Popover>
-    </>
+    filters && (
+      <>
+        <IconButton ref={anchor} onClick={handleFiltersToggle(true)}>
+          <TuneIcon />
+        </IconButton>
+        <Popover
+          open={filtersOpen}
+          onClose={handleFiltersToggle(false)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          anchorEl={anchor.current}
+        >
+          <Box p={2}>
+            <Typography variant="subtitle2" textAlign="center">
+              Filters
+            </Typography>
+          </Box>
+          <Divider />
+
+          <Box py={3}>
+            {Object.entries(config).map(
+              ([key, { label, Component, onChange, componentProps }]) => (
+                <Box py={1} px={3} key={key}>
+                  <Typography variant="subtitle2">{label}</Typography>
+                  <Component
+                    // @ts-ignore
+                    value={filters[key].value}
+                    // @ts-ignore
+                    onChange={(...args) => onChange(filters, ...args)}
+                    {...componentProps}
+                  />
+                </Box>
+              )
+            )}
+          </Box>
+        </Popover>
+      </>
+    )
   );
 };
 

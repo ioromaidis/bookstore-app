@@ -1,13 +1,8 @@
 import { useQuery } from 'react-query';
 import { getBooks } from '../queries';
-import { BookCollection, Category } from '@/features/books';
+import { BookCollection } from '../../types';
 import { filterBooks } from './utils';
-
-export interface GetBookOptions {
-  query?: string;
-  category?: Category[];
-  rating?: [number, number];
-}
+import { GetBookOptions } from './types';
 
 export const useGetBooks = (options: GetBookOptions) =>
   useQuery(['books'], () => getBooks(), {

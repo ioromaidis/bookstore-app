@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useGetBooks } from '@/features/books';
-import Breadcrumbs from '@/features/books/components/breadcrumbs';
 import { Box, Stack } from '@mui/material';
-import BookGrid from '@/features/books/components/bookGrid';
 import DataWrapper from '@/components/dataWrapper';
+import { useGetBooks } from '../../api/hooks';
+import Breadcrumbs from '../../components/breadcrumbs';
+import BookGrid from '../../components/bookGrid';
+import { BookFilterType } from '../../api/hooks/types';
 
 const BookCategory = () => {
   const { cat = '' } = useParams();
-  const { data = [], isLoading } = useGetBooks({ category: [cat] });
+  const { data = [], isLoading } = useGetBooks({
+    categories: { value: [cat], type: BookFilterType.in },
+  });
 
   return (
     <>

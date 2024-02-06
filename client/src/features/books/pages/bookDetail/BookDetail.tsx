@@ -4,16 +4,17 @@ import { Box, Stack } from '@mui/material';
 import DataWrapper from '@/components/dataWrapper';
 
 import { Book, BookCollection } from '../../types';
-import { useGetBook, useGetBooks } from '../../api';
+import { useGetBook, useGetBooks } from '../../api/hooks';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Details from './components/details';
 import Related from './components/related';
+import { BookFilterType } from '../../api/hooks/types';
 
 const BookDetail = () => {
   const { bookId = '', cat = '' } = useParams();
   const { data, isLoading } = useGetBook(bookId);
   const { data: related = [], isLoading: isRelatedLoading } = useGetBooks({
-    category: [cat],
+    categories: { value: [cat], type: BookFilterType.in },
   });
 
   const relatedWithoutCurrentBook = useMemo(

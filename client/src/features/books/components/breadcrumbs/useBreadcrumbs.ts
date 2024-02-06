@@ -15,7 +15,7 @@ const useBreadcrumbs = () => {
   }
 
   return segments.map((segment, index) => ({
-    label: capitalize(unslugify(segment)),
+    label: capitalize(unslugify(decodeURI(segment))),
     url: getSegmentUrl(segments, index),
     isCurrent: index === lastIndex,
   }));

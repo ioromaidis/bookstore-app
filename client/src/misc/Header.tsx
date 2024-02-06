@@ -1,14 +1,21 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Link, Toolbar, Typography } from '@mui/material';
 
 export const Header: React.FC = () => {
   return (
     <Box>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Bookstore
-          </Typography>
+          <Link href="/books">
+            <Typography
+              variant="h6"
+              color="white"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              Bookstore
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>
