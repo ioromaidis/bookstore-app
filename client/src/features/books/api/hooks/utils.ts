@@ -1,5 +1,3 @@
-import { slugify } from '@/helpers/utils';
-
 import { Book } from '../../types';
 import {
   InFilter,
@@ -17,12 +15,12 @@ type ApplyFilterFn<T> = (
   property: keyof Book
 ) => boolean;
 
-const applyQuery = (book: Book, query: string) =>
-  book.title.toLowerCase().includes(query.toLowerCase());
-
 export const filterBooks =
   (query: string) => (filters: BookOptionsWithoutQuery) => (book: Book) =>
     applyQuery(book, query) && applyFilters(book, filters);
+
+const applyQuery = (book: Book, query: string) =>
+  book.title.toLowerCase().includes(query.toLowerCase());
 
 const applyInFilter: ApplyFilterFn<InFilter> = (filter, book, property) => {
   if (!filter.value?.length) {
@@ -31,8 +29,8 @@ const applyInFilter: ApplyFilterFn<InFilter> = (filter, book, property) => {
 
   return filter.value?.some((val) =>
     (book[property] as InFilter['value'])
-      .map((item) => slugify(item))
-      .includes(slugify(val))
+      .map((item) => item.toLowerCase())
+      .includes(val.toLowerCase())
   );
 };
 
