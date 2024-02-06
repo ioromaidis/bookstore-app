@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 let BOOKS = require("./data/books");
 let CATEGORIES = require("./data/categories");
+let COMMENTS = require("./data/comments");
 
 const app = express();
 const port = 3000;
@@ -32,6 +33,21 @@ app.get("/categories", (req, res) => {
 
 app.post("/books", (req, res) => {
   BOOKS.push({ id: uuidv4(), ...req.body });
+  res.sendStatus(200);
+});
+
+app.get("/comments", (req, res) => {
+  const { entityId, entityType } = req.query;
+  res.send(
+    COMMENTS.filter(
+      ({ entityId: id, entityType: type }) =>
+        entityId === id && type === entityType,
+    ),
+  );
+});
+
+app.post("/comments", (req, res) => {
+  COMMENTS.push({ id: uuidv4(), createdAt: new Date(), ...req.body });
   res.sendStatus(200);
 });
 

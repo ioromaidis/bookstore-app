@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Stack } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import DataWrapper from '@/components/dataWrapper';
+import { CommentList, Entity } from '@/features/comments';
 
 import { Book, BookCollection } from '../../types';
 import { useGetBook, useGetBooks } from '../../api/hooks';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Details from './components/details';
 import Related from './components/related';
-import { BookFilterType } from '../../api/hooks/types';
+import { BookFilterType } from '../../api';
 
 const BookDetail = () => {
   const { bookId = '', cat = '' } = useParams();
@@ -29,6 +30,13 @@ const BookDetail = () => {
       <Stack spacing={6}>
         <DataWrapper isLoading={isLoading} dataCheck={!!data}>
           <Details data={data as Book} />
+          <Stack spacing={3}>
+            <Box>
+              <Typography variant="h3">Comments</Typography>
+              <Divider />
+            </Box>
+            <CommentList entityId={bookId} entityType={Entity.book} />
+          </Stack>
         </DataWrapper>
 
         <DataWrapper isLoading={isRelatedLoading} dataCheck={!isRelatedLoading}>

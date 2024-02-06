@@ -1,9 +1,13 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-const EmptyResults: React.FC = () => (
+interface Props {
+  noResultsText?: string;
+}
+
+const EmptyResults: React.FC<Props> = ({ noResultsText }) => (
   <Typography textAlign="center" variant="h6">
-    No items found...
+    {noResultsText || 'No items found...'}
   </Typography>
 );
 
