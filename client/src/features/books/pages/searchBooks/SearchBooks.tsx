@@ -43,7 +43,7 @@ const SearchBooks: React.FC = () => {
 
         <Stack direction="row" alignItems="center" spacing={3}>
           <Search value={query} onChange={handleSearchChange} />
-          <Filters onFiltersChange={handleFiltersChange} />
+          <Filters initial={filters} onFiltersChange={handleFiltersChange} />
         </Stack>
         <Chips filters={filters} />
 

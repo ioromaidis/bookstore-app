@@ -3,27 +3,23 @@ import { Box, Divider, IconButton, Popover, Typography } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
 
 import { GetBookOptions } from '../../../../api/hooks/types';
-import { useFilters } from './hooks/useFilters';
+import { useGetCategories } from '@/features/books';
+import { InFilter } from './InFilter';
+import { FiltersWrapper } from './FiltersWrapper';
+import { MatchFilter } from './MatchFilter';
+import { RangeFilter } from './RangeFilter';
 import { useFiltersToggle } from './hooks/useFiltersToggle';
 
 interface Props {
   onFiltersChange: (newFilters: Partial<GetBookOptions>) => void;
 }
 
-const Filters: React.FC<Props> = ({ onFiltersChange }) => {
-  const { config, filters } = useFilters();
+const Filters: React.FC<Props> = ({ initial, onFiltersChange }) => {
   const { anchor, handleFiltersToggle, filtersOpen } = useFiltersToggle();
-
-  useEffect(() => {
-    if (!filters) {
-      return;
-    }
-
-    onFiltersChange(filters);
-  }, [filters]);
+  const { data: categories = [] } = useGetCategories();
 
   return (
-    filters && (
+    initial && (
       <>
         <IconButton ref={anchor} onClick={handleFiltersToggle(true)}>
           <TuneIcon />
@@ -42,20 +38,41 @@ const Filters: React.FC<Props> = ({ onFiltersChange }) => {
           <Divider />
 
           <Box py={3}>
-            {Object.entries(config).map(
-              ([key, { label, Component, onChange, componentProps }]) => (
-                <Box py={1} px={3} key={key}>
-                  <Typography variant="subtitle2">{label}</Typography>
-                  <Component
-                    // @ts-ignore
-                    value={filters[key].value}
-                    // @ts-ignore
-                    onChange={(...args) => onChange(filters, ...args)}
-                    {...componentProps}
+            <FiltersWrapper initial={initial} onFiltersChange={onFiltersChange}>
+              {({ filters, onChange }) => (
+                <>
+                  <InFilter
+                    dataset={categories}
+                    value={filters.categories?.value}
+                    name="categories"
+                    onChange={(value) => onChange('categories', 'in', value)}
                   />
-                </Box>
-              )
-            )}
+                  <MatchFilter
+                    value={filters.author?.value}
+                    onChange={(value) => onChange('author', 'match', value)}
+                  />
+                  <MatchFilter
+                    value={filters.publisher?.value}
+                    onChange={(value) => onChange('publisher', 'match', value)}
+                  />
+                  <RangeFilter
+                    value={filters?.rating?.value}
+                    onChange={(value) => onChange('rating', 'range', value)}
+                    marks={[
+                      { value: 0, label: '0' },
+                      { value: 1, label: '1' },
+                      { value: 2, label: '2' },
+                      { value: 3, label: '3' },
+                      { value: 4, label: '4' },
+                      { value: 5, label: '5' },
+                    ]}
+                    min={0}
+                    max={5}
+                    step={1}
+                  />
+                </>
+              )}
+            </FiltersWrapper>
           </Box>
         </Popover>
       </>
